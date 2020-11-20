@@ -14,58 +14,75 @@ const User = require("../models/User");
 // @desc    Register an User and generate token
 // @access  Public
 
-router.post("/", async (req, res) => {
-  const { name, email, password } = req.body;
+router.post(
+  "/",
+  [
+    check("name", "Please enter a valid name").not().isEmpty(),
+    check("email", "Please enter a valid Email Id!").isEmail(),
+    check(
+      "password",
+      "Please enter a valid password with atleast 5 or more characters!"
+    ).isLength({ min: 5 }),
+  ],
+  async (req, res) => {
+    // Checking Validation Errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array()[0] });
 
-  try {
-    let user = await User.findOne({ email });
+    // If no validation errors, proceed
+    const { name, email, password } = req.body;
 
-    if (user) {
-      return res
-        .status(400)
-        .json({ msg: "User with that email already exists!" });
-    }
+    try {
+      let user = await User.findOne({ email });
 
-    user = new User({
-      name,
-      email,
-      password,
-    });
-
-    // Generateing salt using bcrypt
-    const salt = await bcrypt.genSalt(10);
-
-    // Hashing password with salt
-    user.password = await bcrypt.hash(password, salt);
-
-    // Saving User
-    await user.save();
-
-    // Generate JWT Token
-    // Create Payload
-    const payload = {
-      user: {
-        id: user.id,
-      },
-    };
-
-    // Sign JWT token with Secret
-    jwt.sign(
-      payload,
-      config.get("jwtSecret"),
-      { expiresIn: "60" },
-      (err, token) => {
-        if (err) {
-          throw err;
-        } else {
-          res.json({ token });
-        }
+      if (user) {
+        return res
+          .status(400)
+          .json({ msg: "User with that email already exists!" });
       }
-    );
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error!");
+
+      user = new User({
+        name,
+        email,
+        password,
+      });
+
+      // Generateing salt using bcrypt
+      const salt = await bcrypt.genSalt(10);
+
+      // Hashing password with salt
+      user.password = await bcrypt.hash(password, salt);
+
+      // Saving User
+      await user.save();
+
+      // Generate JWT Token
+      // Create Payload
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+
+      // Sign JWT token with Secret
+      jwt.sign(
+        payload,
+        config.get("jwtSecret"),
+        { expiresIn: "60" },
+        (err, token) => {
+          if (err) {
+            throw err;
+          } else {
+            res.json({ token });
+          }
+        }
+      );
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error!");
+    }
   }
-});
+);
 
 module.exports = router;
