@@ -1,11 +1,12 @@
 const express = require("express");
-const config = require("config");
-const mongoose = require("mongoose");
 
 // Importing DB Connection Method from DB Config
 const connectDB = require("./config/db");
 
 const app = express();
+
+// Body Parser
+app.use(express.json());
 
 // Defining Routes
 app.use("/api/users", require("./routes/users"));
