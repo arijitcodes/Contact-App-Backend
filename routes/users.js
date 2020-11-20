@@ -11,7 +11,7 @@ const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
 
 // @route   POST api/users
-// @desc    Register an User and generate token
+// @desc    Register an User and generate JWT token
 // @access  Public
 
 router.post(
