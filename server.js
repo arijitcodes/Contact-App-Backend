@@ -7,14 +7,10 @@ const connectDB = require("./config/db");
 
 const app = express();
 
-app.post("/", (req, res) => {
-  console.log("Incoming POST Req at / ");
-  res.send("Hello World! POST Request Receieved at /");
-});
-app.get("/", (req, res) => {
-  console.log("Incoming GET Req at / ");
-  res.send("Hello World! GET Request Receieved at /");
-});
+// Defining Routes
+app.use("/api/users", require("./routes/users"));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/contacts", require("./routes/contacts"));
 
 // Connecting MongoDB
 connectDB();
