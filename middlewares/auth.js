@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
     // If token is there, proceed
     const tokenVerified = jwt.verify(token, config.get("jwtSecret"));
 
-    req.user = tokenVerified;
+    req.user = tokenVerified.user;
     next();
   } catch (error) {
     res.status(401).json({ msg: "Invalid Token!" });
