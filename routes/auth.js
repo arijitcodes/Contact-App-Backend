@@ -7,14 +7,23 @@ const config = require("config");
 // Using Express Validator to validate incoming request data on server side
 const { check, validationResult } = require("express-validator");
 
+// Middlewares
+const auth = require("../middlewares/auth");
+
 // User Model
 const User = require("../models/User");
 
 // @route   GET api/auth
 // @desc    Get details of a Logged In user
 // @access  Private
-router.get("/", async (req, res) => {
-  //
+router.get("/", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error!");
+  }
 });
 
 // @route   POST api/auth
