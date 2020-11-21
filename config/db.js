@@ -7,7 +7,7 @@ const mongodbURI = config.get("mongodbURI");
 module.exports = () => {
   mongoose.connect(
     mongodbURI,
-    { useNewUrlParser: true, useUnifiedTopology: true },
+    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
     (err, res) => {
       if (err)
         console.error(`Error Occured while connecting to MongoDB! \n${err}`);
