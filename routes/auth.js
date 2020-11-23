@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require("config");
 
 // Using Express Validator to validate incoming request data on server side
 const { check, validationResult } = require("express-validator");
@@ -75,7 +74,7 @@ router.post(
       // Sign and Create
       jwt.sign(
         payload,
-        config.get("jwtSecret"),
+        process.env.jwtSecret,
         { expiresIn: 3600 },
         (error, token) => {
           if (error) throw error;

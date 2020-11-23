@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 
 // Importing DB Connection Method from DB Config
 const connectDB = require("./config/db");

@@ -1,8 +1,7 @@
-const config = require("config");
 const mongoose = require("mongoose");
 
 // Setting up Mongoose with MongoDB
-const mongodbURI = config.get("mongodbURI");
+const mongodbURI = process.env.mongodbURI;
 
 module.exports = () => {
   mongoose.connect(

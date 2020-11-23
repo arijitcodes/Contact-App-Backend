@@ -33,7 +33,7 @@ For a Live Demo, check : ([Live Demo link will be updated here soon!](#))
 
 ## From the Developer:
 
-This is a Self Project made on MERN Stack. After going through basics of MERN Stack I needed some kind of full project to work on and gather some experience on MERN Stack Development on my own. So I decided to make a Contact App.
+This is a Self Project, made on MERN Stack. After going through basics of MERN I needed some kind of full project to work on and gather some experience on Full Stack MERN Development on my own. So I decided to make a Contact App.
 
 This is a Web App just like Google Contacts, where users can Sign Up, and Create and Store their contacts.
 
@@ -50,8 +50,8 @@ NOTE: This is a demo project. There can be a lot of more features and functional
 <div>
 <ol>
     <li>To setup this project, clone it and run npm install.</li>
-    <li>Create a file named 'default.json' in the config folder.</li>
-    <li>Add the following two JSON Fields to be used in the app :
+    <li>Create a file named .env in the root.</li>
+    <li>Add the following two Env Variables to be used in the app :
     <ul>
         <li>mongodbURI</li>
         <li>jwtSecret</li>
